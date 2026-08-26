@@ -1,0 +1,649 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@using Municipality_System_Administration.Models
+@model Municipality_System_Administration.Models.DisposalRequest
+
+@{
+    ViewBag.Title = "Disposal Request Details";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: #f4f7fb;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .card-custom {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        margin-bottom: 20px;
+    }
+
+    .detail-item {
+        display: flex;
+        padding: 8px 0;
+        border-bottom: 1px solid #f1f3f5;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #495057;
+        width: 200px;
+        flex-shrink: 0;
+    }
+
+    .detail-value {
+        color: #212529;
+        flex: 1;
+    }
+
+        .detail-value strong {
+            color: #2c3e50;
+        }
+
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-pending {
+        background: #fd7e14;
+        color: white;
+    }
+
+    .status-approved {
+        background: #28a745;
+        color: white;
+    }
+
+    .status-rejected {
+        background: #dc3545;
+        color: white;
+    }
+
+    .condition-badge {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .condition-new {
+        background: #28a745;
+        color: white;
+    }
+
+    .condition-excellent {
+        background: #20c997;
+        color: white;
+    }
+
+    .condition-good {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .condition-fair {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    .condition-poor {
+        background: #fd7e14;
+        color: white;
+    }
+
+    .condition-damaged {
+        background: #dc3545;
+        color: white;
+    }
+
+    .badge-secondary {
+        background: #6c757d;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #2c3e50;
+        border-color: #2c3e50;
+    }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            border-color: #1a252f;
+        }
+
+    .btn-success {
+        color: #fff;
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .btn-danger {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        border-radius: 0.3rem;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col-md-6, .col-md-12 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .col-md-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .section-title {
+        color: #2c3e50;
+        font-weight: 600;
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .asset-summary {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #2c3e50;
+        margin-bottom: 15px;
+    }
+
+        .asset-summary .asset-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .asset-summary .asset-number {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+    .notes-box {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #17a2b8;
+        margin-top: 10px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        display: block;
+    }
+
+    .review-box {
+        background: #e8f4fd;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #2c3e50;
+        margin-top: 10px;
+    }
+
+        .review-box .reviewer {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .review-box .review-date {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+    .status-badge-large {
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+        .status-badge-large.status-pending {
+            background: #fd7e14;
+            color: white;
+        }
+
+        .status-badge-large.status-approved {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-badge-large.status-rejected {
+            background: #dc3545;
+            color: white;
+        }
+
+    .value-display {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .method-display {
+        background: #e9ecef;
+        padding: 4px 15px;
+        border-radius: 20px;
+        display: inline-block;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    /* Fixed: Notes container for detail-value */
+    .notes-container {
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #17a2b8;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        display: block;
+        margin-top: 5px;
+        width: 100%;
+    }
+
+    .review-notes-container {
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #2c3e50;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        display: block;
+        margin-top: 5px;
+        width: 100%;
+    }
+
+    .asset-notes-container {
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #17a2b8;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        display: block;
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    @@media (max-width: 768px) {
+        .col-md-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .detail-item {
+            flex-direction: column;
+        }
+
+        .detail-label {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+            .action-buttons .btn {
+                width: 100%;
+            }
+    }
+</style>
+
+<div class="container mt-4">
+
+    <div class="header">
+        <h2>
+            <i class="fa fa-info-circle"></i>
+            Disposal Request Details
+        </h2>
+        <p>Detailed information for disposal request #@Model.DisposalRequestId</p>
+    </div>
+
+    @if (Model != null)
+    {
+        var asset = ViewBag.Asset as Asset;
+        var requestedBy = ViewBag.RequestedBy as ApplicationUser;
+        var financeReviewedBy = ViewBag.FinanceReviewedBy as ApplicationUser;
+
+        <!-- Request Status Overview -->
+        <div class="card-custom">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Request ID</span>
+                        <span class="detail-value"><strong>#@Model.DisposalRequestId</strong></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value">
+                            @{
+                                string statusClass = "status-" + (Model.Status?.ToLower() ?? "pending");
+                            }
+                            <span class="status-badge-large @statusClass">
+                                <i class="fa fa-circle"></i> @Model.Status
+                            </span>
+                        </span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Requested By</span>
+                        <span class="detail-value">@(requestedBy?.UserName ?? "Unknown")</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Request Date</span>
+                        <span class="detail-value">@Model.RequestDate.ToString("dd MMM yyyy HH:mm")</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Disposal Method</span>
+                        <span class="detail-value">
+                            <span class="method-display">@(Model.DisposalMethod ?? "Not specified")</span>
+                        </span>
+                    </div>
+                    @if (Model.DisposalValue.HasValue)
+                    {
+                        <div class="detail-item">
+                            <span class="detail-label">Disposal Value</span>
+                            <span class="detail-value">
+                                <span class="value-display">@Model.DisposalValue.Value.ToString("C2")</span>
+                            </span>
+                        </div>
+                    }
+                    @if (Model.FinanceReviewDate.HasValue)
+                    {
+                        <div class="detail-item">
+                            <span class="detail-label">Finance Review Date</span>
+                            <span class="detail-value">@Model.FinanceReviewDate.Value.ToString("dd MMM yyyy HH:mm")</span>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.FinanceReviewedByUserId))
+                    {
+                        <div class="detail-item">
+                            <span class="detail-label">Finance Reviewed By</span>
+                            <span class="detail-value">@(financeReviewedBy?.UserName ?? "Unknown")</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Asset Information -->
+        <div class="card-custom">
+            <h5 class="section-title"><i class="fa fa-box"></i> Asset Information</h5>
+            <div class="asset-summary">
+                <div class="asset-name">@(asset?.AssetName ?? "Unknown")</div>
+                <div class="asset-number">@(asset?.AssetNumber ?? "N/A")</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Category</span>
+                        <span class="detail-value">@(asset?.Category ?? "N/A")</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Brand</span>
+                        <span class="detail-value">@(asset?.Brand ?? "N/A")</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Model</span>
+                        <span class="detail-value">@(asset?.Model ?? "N/A")</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Serial Number</span>
+                        <span class="detail-value">@(asset?.SerialNumber ?? "N/A")</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Condition</span>
+                        <span class="detail-value">
+                            @{
+                                string conditionClass = "condition-" + (asset?.Condition?.ToLower() ?? "good");
+                            }
+                            <span class="condition-badge @conditionClass">
+                                @(asset?.Condition ?? "N/A")
+                            </span>
+                        </span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Current Status</span>
+                        <span class="detail-value">@(asset?.Status ?? "N/A")</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Purchase Date</span>
+                        <span class="detail-value">@(asset?.PurchaseDate?.ToString("dd MMM yyyy") ?? "N/A")</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Purchase Price</span>
+                        <span class="detail-value">@(asset?.PurchasePrice?.ToString("C2") ?? "N/A")</span>
+                    </div>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(asset?.Location))
+            {
+                <div class="detail-item">
+                    <span class="detail-label">Location</span>
+                    <span class="detail-value">@asset.Location</span>
+                </div>
+            }
+        </div>
+
+        <!-- Disposal Details -->
+        <div class="card-custom">
+            <h5 class="section-title"><i class="fa fa-recycle"></i> Disposal Details</h5>
+            <div class="detail-item">
+                <span class="detail-label">Reason for Disposal</span>
+                <span class="detail-value">
+                    <div class="notes-container">@Model.Reason</div>
+                </span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.DisposalMethod))
+            {
+                <div class="detail-item">
+                    <span class="detail-label">Disposal Method</span>
+                    <span class="detail-value">
+                        <span class="method-display">@Model.DisposalMethod</span>
+                    </span>
+                </div>
+            }
+            @if (Model.DisposalValue.HasValue)
+            {
+                <div class="detail-item">
+                    <span class="detail-label">Disposal Value</span>
+                    <span class="detail-value">
+                        <span class="value-display">@Model.DisposalValue.Value.ToString("C2")</span>
+                    </span>
+                </div>
+            }
+        </div>
+
+        <!-- Finance Review -->
+        if (Model.Status == "Approved" || Model.Status == "Rejected")
+        {
+            <div class="card-custom">
+                <h5 class="section-title"><i class="fa fa-coins"></i> Finance Review</h5>
+                <div class="review-box">
+                    <div>
+                        <span class="reviewer">@(financeReviewedBy?.UserName ?? "Unknown")</span>
+                        <span class="review-date">reviewed this request on @Model.FinanceReviewDate?.ToString("dd MMM yyyy HH:mm")</span>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.FinanceReviewNotes))
+                    {
+                        <div class="detail-item" style="margin-top: 10px;">
+                            <span class="detail-label">Review Notes</span>
+                            <span class="detail-value">
+                                <div class="review-notes-container">@Model.FinanceReviewNotes</div>
+                            </span>
+                        </div>
+                    }
+                    @if (Model.Status == "Approved" && Model.DisposalValue.HasValue)
+                    {
+                        <div class="detail-item">
+                            <span class="detail-label">Approved Value</span>
+                            <span class="detail-value">
+                                <span class="value-display" style="color: #28a745;">@Model.DisposalValue.Value.ToString("C2")</span>
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Notes History -->
+        if (!string.IsNullOrEmpty(asset?.Notes))
+        {
+            <div class="card-custom">
+                <h5 class="section-title"><i class="fa fa-history"></i> Asset Notes History</h5>
+                <div class="asset-notes-container">
+                    @Html.Raw(asset.Notes.Replace("\n", "<br />"))
+                </div>
+            </div>
+        }
+
+        <!-- Actions -->
+        <div class="card-custom">
+            <div class="action-buttons">
+                <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">
+                    <i class="fa fa-arrow-left"></i> Back to Dashboard
+                </a>
+                <a href="@Url.Action("Index", "Disposal")" class="btn btn-primary btn-lg">
+                    <i class="fa fa-list"></i> View All Requests
+                </a>
+                @if (Model.Status == "Pending" && User.IsInRole("FinanceOfficer"))
+                {
+                    <a href="@Url.Action("FinanceReview", "Disposal", new { id = Model.DisposalRequestId })"
+                       class="btn btn-success btn-lg">
+                        <i class="fa fa-coins"></i> Review Request
+                    </a>
+                }
+                <a href="@Url.Action("Details", "Assets", new { id = Model.AssetId })" class="btn btn-info btn-lg">
+                    <i class="fa fa-box"></i> View Asset
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> Request not found.
+        </div>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">
+            <i class="fa fa-arrow-left"></i> Back to Dashboard
+        </a>
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

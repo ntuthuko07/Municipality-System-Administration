@@ -1,0 +1,476 @@
+﻿@using Municipality_System_Administration.Models
+@{
+    ViewBag.Title = "Financial Reports";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: #f4f7fb;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .card-custom {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        border-left: 4px solid #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .stat-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    .table thead {
+        background: #2c3e50;
+        color: white;
+    }
+
+        .table thead th {
+            color: white;
+            padding: 12px 15px;
+        }
+
+    .table tbody td {
+        padding: 12px 15px;
+        vertical-align: middle;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-approved {
+        background: #28a745;
+        color: white;
+    }
+
+    .status-rejected {
+        background: #dc3545;
+        color: white;
+    }
+
+    .status-pending {
+        background: #fd7e14;
+        color: white;
+    }
+
+    .badge-secondary {
+        background: #6c757d;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col-md-3, .col-md-6 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .btn-info {
+        color: #fff;
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 12px;
+        line-height: 1.5;
+        border-radius: 4px;
+        text-decoration: none !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 30px;
+        height: 30px;
+    }
+
+        .btn-sm i {
+            font-size: 13px;
+        }
+
+    .action-buttons {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 30px 0;
+        color: #6c757d;
+    }
+
+        .no-data i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+    .method-stat {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #e9ecef;
+        margin-bottom: 10px;
+    }
+
+        .method-stat .count {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .method-stat .method {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .method-stat .total {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+    @@media (max-width: 768px) {
+        .col-md-3, .col-md-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+    }
+</style>
+
+<div class="container mt-4">
+
+    <div class="page-header">
+        <h2>
+            <i class="fa fa-chart-bar"></i>
+            Financial Reports
+        </h2>
+        <p>View financial reports and analytics for disposal requests.</p>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #28a745;">
+                <div class="stat-number">@ViewBag.TotalApproved</div>
+                <div class="stat-label"><i class="fa fa-check-circle text-success"></i> Approved Disposals</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #dc3545;">
+                <div class="stat-number">@ViewBag.TotalRejected</div>
+                <div class="stat-label"><i class="fa fa-times-circle text-danger"></i> Rejected Disposals</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #fd7e14;">
+                <div class="stat-number">@ViewBag.TotalPending</div>
+                <div class="stat-label"><i class="fa fa-clock text-warning"></i> Pending Disposals</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #f1c40f;">
+                <div class="stat-number">@ViewBag.TotalValue.ToString("C0")</div>
+                <div class="stat-label"><i class="fa fa-dollar-sign text-warning"></i> Total Disposal Value</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Method Statistics -->
+    <div class="card-custom">
+        <h5><i class="fa fa-chart-pie"></i> Disposal Method Statistics</h5>
+        <hr />
+        @if (ViewBag.MethodStats != null)
+        {
+            var methodStats = ViewBag.MethodStats as List<MethodStat>;
+            if (methodStats != null && methodStats.Any())
+            {
+                <div class="row">
+                    @foreach (var stat in methodStats)
+                    {
+                        <div class="col-md-3">
+                            <div class="method-stat">
+                                <div class="count">@stat.Count</div>
+                                <div class="method">@stat.Method</div>
+                                <div class="total">Total: @stat.Total.ToString("C0")</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="no-data">
+                    <i class="fa fa-chart-pie text-muted"></i>
+                    <p class="text-muted">No disposal data available.</p>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="no-data">
+                <i class="fa fa-chart-pie text-muted"></i>
+                <p class="text-muted">No disposal data available.</p>
+            </div>
+        }
+    </div>
+
+    <!-- Approved Disposals -->
+    <div class="card-custom">
+        <h5><i class="fa fa-check-circle text-success"></i> Approved Disposals</h5>
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Asset</th>
+                        <th>Method</th>
+                        <th>Value</th>
+                        <th>Reviewed By</th>
+                        <th>Review Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.ApprovedDisposals != null && ((List<DisposalRequest>)ViewBag.ApprovedDisposals).Any())
+                    {
+                        var assets = ViewBag.Assets as Dictionary<int, Asset>;
+                        var financeOfficers = ViewBag.FinanceOfficers as Dictionary<string, string>;
+                        foreach (var item in ViewBag.ApprovedDisposals as List<DisposalRequest>)
+                        {
+                            var asset = assets != null && assets.ContainsKey(item.AssetId) ? assets[item.AssetId] : null;
+                            var financeOfficer = financeOfficers != null && financeOfficers.ContainsKey(item.FinanceReviewedByUserId)
+                                ? financeOfficers[item.FinanceReviewedByUserId]
+                                : "Unknown";
+                            <tr>
+                                <td><strong>#@item.DisposalRequestId</strong></td>
+                                <td>
+                                    <i class="fa fa-box"></i> @(asset?.AssetName ?? "Unknown")
+                                    <br /><small class="text-muted">@(asset?.AssetNumber ?? "N/A")</small>
+                                </td>
+                                <td><span class="badge-secondary">@(item.DisposalMethod ?? "N/A")</span></td>
+                                <td><strong>@item.DisposalValue?.ToString("C2")</strong></td>
+                                <td>@financeOfficer</td>
+                                <td>@item.FinanceReviewDate?.ToString("dd MMM yyyy")</td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Finance", new { id = item.DisposalRequestId })"
+                                       class="btn btn-info btn-sm" title="View Details">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <div class="no-data">
+                                    <i class="fa fa-check-circle text-muted"></i>
+                                    <p class="text-muted">No approved disposals found.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Rejected Disposals -->
+    <div class="card-custom">
+        <h5><i class="fa fa-times-circle text-danger"></i> Rejected Disposals</h5>
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Asset</th>
+                        <th>Method</th>
+                        <th>Reason</th>
+                        <th>Reviewed By</th>
+                        <th>Review Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.RejectedDisposals != null && ((List<DisposalRequest>)ViewBag.RejectedDisposals).Any())
+                    {
+                        var assets = ViewBag.Assets as Dictionary<int, Asset>;
+                        var financeOfficers = ViewBag.FinanceOfficers as Dictionary<string, string>;
+                        foreach (var item in ViewBag.RejectedDisposals as List<DisposalRequest>)
+                        {
+                            var asset = assets != null && assets.ContainsKey(item.AssetId) ? assets[item.AssetId] : null;
+                            var financeOfficer = financeOfficers != null && financeOfficers.ContainsKey(item.FinanceReviewedByUserId)
+                                ? financeOfficers[item.FinanceReviewedByUserId]
+                                : "Unknown";
+                            <tr>
+                                <td><strong>#@item.DisposalRequestId</strong></td>
+                                <td>
+                                    <i class="fa fa-box"></i> @(asset?.AssetName ?? "Unknown")
+                                    <br /><small class="text-muted">@(asset?.AssetNumber ?? "N/A")</small>
+                                </td>
+                                <td><span class="badge-secondary">@(item.DisposalMethod ?? "N/A")</span></td>
+                                <td>@(item.FinanceReviewNotes ?? "No reason provided")</td>
+                                <td>@financeOfficer</td>
+                                <td>@item.FinanceReviewDate?.ToString("dd MMM yyyy")</td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Finance", new { id = item.DisposalRequestId })"
+                                       class="btn btn-info btn-sm" title="View Details">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <div class="no-data">
+                                    <i class="fa fa-times-circle text-muted"></i>
+                                    <p class="text-muted">No rejected disposals found.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="row">
+        <div class="col-md-12">
+            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+    <a>
+        @Html.ActionLink("Depreciation", "DepreciationReport", "Finance", null, new { @class = "nav-link" })
+    </a>
+
+</div>
+

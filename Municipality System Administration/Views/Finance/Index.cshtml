@@ -1,0 +1,669 @@
+﻿@using Municipality_System_Administration.Models
+@using Municipality_System_Administration.Services
+@{
+    ViewBag.Title = "Finance Dashboard";
+    var depreciationSummary = ViewBag.DepreciationSummary as DepreciationSummary;
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: #f4f7fb;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        transition: transform 0.3s;
+        border-left: 4px solid #2c3e50;
+        margin-bottom: 20px;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .stat-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+        .stat-icon .fa-coins {
+            color: #f1c40f;
+        }
+
+        .stat-icon .fa-recycle {
+            color: #27ae60;
+        }
+
+        .stat-icon .fa-clock {
+            color: #e67e22;
+        }
+
+        .stat-icon .fa-check-circle {
+            color: #2ecc71;
+        }
+
+        .stat-icon .fa-times-circle {
+            color: #e74c3c;
+        }
+
+        .stat-icon .fa-dollar-sign {
+            color: #2c3e50;
+        }
+
+        .stat-icon .fa-chart-line {
+            color: #8e44ad;
+        }
+
+        .stat-icon .fa-boxes {
+            color: #2980b9;
+        }
+
+        .stat-icon .fa-book {
+            color: #2ecc71;
+        }
+
+        .stat-icon .fa-percent {
+            color: #e74c3c;
+        }
+
+    .card-custom {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        margin-bottom: 20px;
+    }
+
+    .quick-action-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        transition: transform 0.3s;
+        height: 100%;
+        border: 1px solid #e9ecef;
+    }
+
+        .quick-action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .quick-action-card .icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            font-size: 1.8rem;
+        }
+
+    .icon-primary {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .icon-success {
+        background: #e8f5e9;
+        color: #388e3c;
+    }
+
+    .icon-warning {
+        background: #fff3e0;
+        color: #f57c00;
+    }
+
+    .icon-info {
+        background: #e0f7fa;
+        color: #00838f;
+    }
+
+    .icon-depreciation {
+        background: #f3e5f5;
+        color: #8e44ad;
+    }
+
+    .table thead {
+        background: #2c3e50;
+        color: white;
+    }
+
+        .table thead th {
+            color: white;
+            padding: 12px 15px;
+        }
+
+    .table tbody td {
+        padding: 12px 15px;
+        vertical-align: middle;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-pending {
+        background: #fd7e14;
+        color: white;
+    }
+
+    .status-approved {
+        background: #28a745;
+        color: white;
+    }
+
+    .status-rejected {
+        background: #dc3545;
+        color: white;
+    }
+
+    .status-active {
+        background: #28a745;
+        color: white;
+    }
+
+    .status-fullydepreciated {
+        background: #8e44ad;
+        color: white;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #2c3e50;
+        border-color: #2c3e50;
+    }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            border-color: #1a252f;
+        }
+
+    .btn-success {
+        color: #fff;
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .btn-info {
+        color: #fff;
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+
+    .btn-warning {
+        color: #212529;
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
+
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 12px;
+        line-height: 1.5;
+        border-radius: 4px;
+        text-decoration: none !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 30px;
+        height: 30px;
+    }
+
+        .btn-sm i {
+            font-size: 13px;
+        }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col-md-3, .col-md-4 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .col-md-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    .alert {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-warning {
+        color: #856404;
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+    }
+
+    .alert-dismissible {
+        padding-right: 4rem;
+    }
+
+    .close {
+        float: right;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        opacity: .5;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .badge-secondary {
+        background: #6c757d;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    .depreciation-alert {
+        background: #f3e5f5;
+        border-left: 4px solid #8e44ad;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+        .depreciation-alert i {
+            color: #8e44ad;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .depreciation-alert .count {
+            font-weight: bold;
+            color: #8e44ad;
+            font-size: 1.2rem;
+        }
+
+    @@media (max-width: 768px) {
+        .col-md-3, .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .action-buttons .btn {
+            min-width: 28px;
+            height: 28px;
+            padding: 3px 8px;
+        }
+
+            .action-buttons .btn i {
+                font-size: 11px;
+            }
+    }
+</style>
+
+<div class="container mt-4">
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-check-circle"></i>
+            @TempData["Success"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="page-header">
+        <h2>
+            <i class="fa fa-coins"></i>
+            Finance Dashboard
+        </h2>
+        <p>Welcome, @User.Identity.Name! Manage financial operations, approvals, and asset depreciation.</p>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- DEPRECIATION ALERT                         -->
+    <!-- ========================================== -->
+    @if (ViewBag.AssetsNeedingDepreciationCount > 0)
+    {
+        <div class="depreciation-alert">
+            <i class="fa fa-exclamation-triangle"></i>
+            <span class="count">@ViewBag.AssetsNeedingDepreciationCount</span>
+            assets are due for depreciation.
+            <a href="@Url.Action("DepreciationReport", "Finance")" class="btn btn-warning btn-sm" style="margin-left: 10px;">
+                <i class="fa fa-calculator"></i> Process Depreciation Now
+            </a>
+        </div>
+    }
+
+    <!-- ========================================== -->
+    <!-- DISPOSAL STATISTICS                       -->
+    <!-- ========================================== -->
+    <h4 class="mb-3"><i class="fa fa-recycle"></i> Disposal Statistics</h4>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #e67e22;">
+                <div class="stat-icon"><i class="fa fa-clock"></i></div>
+                <div class="stat-number">@ViewBag.PendingDisposals</div>
+                <div class="stat-label">Pending Disposal Requests</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #27ae60;">
+                <div class="stat-icon"><i class="fa fa-check-circle"></i></div>
+                <div class="stat-number">@ViewBag.ApprovedDisposals</div>
+                <div class="stat-label">Approved Disposals</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #e74c3c;">
+                <div class="stat-icon"><i class="fa fa-times-circle"></i></div>
+                <div class="stat-number">@ViewBag.RejectedDisposals</div>
+                <div class="stat-label">Rejected Disposals</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #f1c40f;">
+                <div class="stat-icon"><i class="fa fa-dollar-sign"></i></div>
+                <div class="stat-number">@ViewBag.TotalDisposalValue.ToString("C0")</div>
+                <div class="stat-label">Total Disposal Value</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- DEPRECIATION STATISTICS                   -->
+    <!-- ========================================== -->
+    <h4 class="mb-3"><i class="fa fa-chart-line"></i> Depreciation Summary</h4>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #8e44ad;">
+                <div class="stat-icon"><i class="fa fa-boxes"></i></div>
+                <div class="stat-number">@depreciationSummary?.TotalAssets</div>
+                <div class="stat-label">Total Active Assets</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #2980b9;">
+                <div class="stat-icon"><i class="fa fa-calculator"></i></div>
+                <div class="stat-number">@depreciationSummary?.TotalPurchaseValue.ToString("C0")</div>
+                <div class="stat-label">Total Purchase Value</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #2ecc71;">
+                <div class="stat-icon"><i class="fa fa-book"></i></div>
+                <div class="stat-number">@depreciationSummary?.TotalCurrentBookValue.ToString("C0")</div>
+                <div class="stat-label">Total Book Value</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="border-left-color: #e74c3c;">
+                <div class="stat-icon"><i class="fa fa-percent"></i></div>
+                <div class="stat-number">@depreciationSummary?.TotalAccumulatedDepreciation.ToString("C0")</div>
+                <div class="stat-label">Accumulated Depreciation</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- QUICK ACTIONS                             -->
+    <!-- ========================================== -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card-custom">
+                <h4><i class="fa fa-bolt"></i> Quick Actions</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="quick-action-card">
+                            <div class="icon-circle icon-warning"><i class="fa fa-clock"></i></div>
+                            <h5>Pending Disposals</h5>
+                            <p class="text-muted">Review disposal requests</p>
+                            <a href="@Url.Action("Index", "Disposal")" class="btn btn-primary">
+                                <i class="fa fa-arrow-right"></i> View Requests
+                                @if (ViewBag.PendingDisposals > 0)
+                                {
+                                    <span class="badge badge-danger" style="background: #dc3545; color: white; margin-left: 5px;">@ViewBag.PendingDisposals</span>
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="quick-action-card">
+                            <div class="icon-circle icon-depreciation"><i class="fa fa-chart-line"></i></div>
+                            <h5>Depreciation</h5>
+                            <p class="text-muted">View and process depreciation</p>
+                            <a href="@Url.Action("DepreciationReport", "Finance")" class="btn btn-primary">
+                                <i class="fa fa-arrow-right"></i> View Report
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="quick-action-card">
+                            <div class="icon-circle icon-success"><i class="fa fa-file-alt"></i></div>
+                            <h5>Financial Reports</h5>
+                            <p class="text-muted">Generate financial reports</p>
+                            <a href="@Url.Action("Reports", "Finance")" class="btn btn-success">
+                                <i class="fa fa-arrow-right"></i> View Reports
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="quick-action-card">
+                            <div class="icon-circle icon-success"><i class="fa fa-check-circle"></i></div>
+                            <h5>Approved Disposals</h5>
+                            <p class="text-muted">View approved requests</p>
+                            <a href="@Url.Action("Index", "Disposal", new { status = "Approved" })" class="btn btn-info">
+                                <i class="fa fa-arrow-right"></i> View Approved
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- RECENT DISPOSAL REQUESTS                   -->
+    <!-- ========================================== -->
+    <div class="card-custom">
+        <h4><i class="fa fa-recycle"></i> Recent Disposal Requests</h4>
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Asset</th>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>Request Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.RecentRequests != null && ((List<DisposalRequest>)ViewBag.RecentRequests).Any())
+                    {
+                        var assets = ViewBag.Assets as Dictionary<int, Asset>;
+                        foreach (var item in ViewBag.RecentRequests as List<DisposalRequest>)
+                        {
+                            string statusClass = "status-" + (item.Status?.ToLower() ?? "pending");
+                            var asset = assets != null && assets.ContainsKey(item.AssetId) ? assets[item.AssetId] : null;
+                            <tr>
+                                <td><strong>#@item.DisposalRequestId</strong></td>
+                                <td>
+                                    <i class="fa fa-box"></i> @(asset?.AssetName ?? "Unknown")
+                                    <br /><small class="text-muted">@(asset?.AssetNumber ?? "N/A")</small>
+                                </td>
+                                <td><span class="badge-secondary">@(item.DisposalMethod ?? "Pending")</span></td>
+                                <td><span class="status-badge @statusClass"><i class="fa fa-circle"></i> @item.Status</span></td>
+                                <td>@item.RequestDate.ToString("dd MMM yyyy")</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="@Url.Action("Details", "Disposal", new { id = item.DisposalRequestId })"
+                                           class="btn btn-info btn-sm" title="View Details">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        @if (item.Status == "Pending")
+                                        {
+                                            <a href="@Url.Action("FinanceReview", "Disposal", new { id = item.DisposalRequestId })"
+                                               class="btn btn-primary btn-sm" title="Review Request">
+                                                <i class="fa fa-coins"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <div class="text-center py-4">
+                                    <i class="fa fa-check-circle fa-2x text-muted mb-2"></i>
+                                    <p class="text-muted">No recent disposal requests.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (ViewBag.RecentRequests != null && ((List<DisposalRequest>)ViewBag.RecentRequests).Count > 5)
+        {
+            <div class="text-center">
+                <a href="@Url.Action("Index", "Disposal")" class="btn btn-primary btn-sm">
+                    <i class="fa fa-arrow-right"></i> View All Requests
+                </a>
+            </div>
+        }
+    </div>
+
+</div>
+
