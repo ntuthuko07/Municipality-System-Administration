@@ -249,12 +249,13 @@
 
         @if (Model != null)
         {
+            // Display asset details and confirmation message
             <div class="info-box">
                 <i class="fa fa-info-circle"></i>
                 <strong>Confirm:</strong> You are about to start the repair for this asset.
                 This will change the status to "In Repair".
             </div>
-
+            // Form to start the repair process
             using (Html.BeginForm("StartRepair", "Technician", new { id = Model.AssetId }, FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
