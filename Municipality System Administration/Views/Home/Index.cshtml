@@ -2,10 +2,462 @@
     ViewBag.Title = "Municipality Asset Management";
 }
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f7fb;
+        color: #2d3748;
+    }
+
+    .municipality-hero {
+        background: linear-gradient(135deg, #0a2e5c 0%, #0d4a2e 100%);
+        min-height: 450px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0 0 50px 50px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+        .municipality-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .municipality-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .municipality-hero h1 {
+            font-weight: 800;
+            font-size: 3.2rem;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .municipality-hero .lead {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+    .government-icon {
+        background: rgba(255, 255, 255, 0.1);
+        color: #9cff57;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        border: 3px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        transition: all 0.5s ease;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+        .government-icon:hover {
+            transform: scale(1.05);
+            border-color: #9cff57;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .government-icon i {
+            font-size: 5rem;
+            color: #9cff57;
+        }
+
+    .hero-btn {
+        padding: 14px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+    .hero-btn-light {
+        background: white;
+        color: #0a2e5c;
+    }
+
+        .hero-btn-light:hover {
+            background: #f0f4f8;
+            color: #0a2e5c;
+        }
+
+    .hero-btn-success {
+        background: #28a745;
+        color: white;
+    }
+
+        .hero-btn-success:hover {
+            background: #1e7e34;
+            color: white;
+        }
+
+    .hero-btn-primary {
+        background: #0a2e5c;
+        color: white;
+    }
+
+        .hero-btn-primary:hover {
+            background: #0d4a2e;
+            color: white;
+        }
+
+    .hero-btn-outline {
+        background: transparent;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+        .hero-btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            color: white;
+        }
+
+    .hero-btn i {
+        font-size: 1.1rem;
+    }
+
+    .hero-btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .section-title {
+        font-weight: 800;
+        color: #0a2e5c;
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .section-divider {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #0a2e5c, #0d4a2e);
+        margin: 15px auto 25px auto;
+        border-radius: 2px;
+    }
+
+    .system-card {
+        background: white;
+        border-radius: 16px;
+        padding: 35px 25px;
+        height: 100%;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s ease;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .system-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0a2e5c, #0d4a2e);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .system-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border-color: rgba(10, 46, 92, 0.1);
+        }
+
+            .system-card:hover::before {
+                opacity: 1;
+            }
+
+        .system-card .icon-circle {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 18px auto;
+            background: linear-gradient(135deg, #0a2e5c, #0d4a2e);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(10, 46, 92, 0.2);
+        }
+
+        .system-card:hover .icon-circle {
+            transform: scale(1.05) rotate(-5deg);
+            box-shadow: 0 12px 35px rgba(10, 46, 92, 0.3);
+        }
+
+        .system-card h3 {
+            color: #0a2e5c;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .system-card p {
+            color: #6c757d;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .system-card .card-badge {
+            display: inline-block;
+            background: #e8f4fd;
+            color: #0a2e5c;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+    .role-cards-section {
+        background: white;
+        border-radius: 20px;
+        padding: 40px 30px;
+        margin-top: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .role-card {
+        background: #f8faff;
+        border-radius: 14px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid #eef2f7;
+        height: 100%;
+        text-decoration: none;
+        display: block;
+        color: inherit;
+    }
+
+        .role-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-color: #0a2e5c;
+        }
+
+        .role-card .role-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .role-card .role-icon-admin {
+            background: #8e44ad;
+        }
+
+        .role-card .role-icon-asset {
+            background: #2980b9;
+        }
+
+        .role-card .role-icon-technician {
+            background: #e67e22;
+        }
+
+        .role-card .role-icon-depthead {
+            background: #f39c12;
+        }
+
+        .role-card .role-icon-finance {
+            background: #2c3e50;
+        }
+
+        .role-card .role-icon-employee {
+            background: #27ae60;
+        }
+
+        .role-card .role-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #0a2e5c;
+            margin-bottom: 2px;
+        }
+
+        .role-card .role-desc {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+
+    .service-banner {
+        background: linear-gradient(135deg, #0a2e5c, #0d4a2e);
+        padding: 50px 0;
+        margin-top: 40px;
+        border-radius: 20px;
+    }
+
+        .service-banner h2 {
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .service-banner p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            letter-spacing: 2px;
+        }
+
+        .service-banner .banner-icon {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 1.5rem;
+            opacity: 0.6;
+        }
+
+    @@media (max-width: 992px) {
+        .municipality-hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .government-icon {
+            width: 150px;
+            height: 150px;
+        }
+
+            .government-icon i {
+                font-size: 3.5rem;
+            }
+    }
+
+    @@media (max-width: 768px) {
+        .municipality-hero {
+            min-height: auto;
+            padding: 40px 0;
+            border-radius: 0 0 30px 30px;
+        }
+
+            .municipality-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .municipality-hero .lead {
+                font-size: 1rem;
+            }
+
+        .government-icon {
+            width: 120px;
+            height: 120px;
+            margin-top: 20px;
+        }
+
+            .government-icon i {
+                font-size: 2.8rem;
+            }
+
+        .section-title {
+            font-size: 1.6rem;
+        }
+
+        .hero-btn-group {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hero-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .system-card {
+            padding: 25px 20px;
+        }
+
+        .role-cards-section {
+            padding: 25px 20px;
+        }
+
+        .service-banner {
+            padding: 30px 20px;
+            border-radius: 15px;
+        }
+
+            .service-banner h2 {
+                font-size: 1.4rem;
+            }
+    }
+
+    @@media (max-width: 576px) {
+        .municipality-hero h1 {
+            font-size: 1.5rem;
+        }
+
+        .hero-btn {
+            font-size: 0.95rem;
+            padding: 12px 25px;
+        }
+
+        .col-md-4 {
+            margin-bottom: 15px;
+        }
+    }
+</style>
+
 <main>
 
     <section class="municipality-hero text-white">
-        <div class="container py-5">
+        <div class="container py-4">
 
             <div class="row align-items-center">
 
@@ -20,57 +472,113 @@
                         employees, assets, departments and public services efficiently.
                     </p>
 
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        var user = HttpContext.Current.User;
-                        string dashboardUrl = "#";
+                    <div class="hero-btn-group">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var user = HttpContext.Current.User;
 
-                        if (user.IsInRole("Admin"))
-                        {
-                            dashboardUrl = Url.Action("AdminDashboard", "Home");
-                        }
-                        else if (user.IsInRole("MunicipalEmployee"))
-                        {
-                            dashboardUrl = Url.Action("EmployeeDashboard", "Home");
-                        }
-                        else if (user.IsInRole("Technician"))
-                        {
-                            dashboardUrl = Url.Action("TechnicianDashboard", "Home");
-                        }
-                        else if (user.IsInRole("DepartmentHead"))
-                        {
-                            dashboardUrl = Url.Action("DepartmentHeadDashboard", "Home");
-                        }
-                        else if (user.IsInRole("FinanceOfficer"))
-                        {
-                            dashboardUrl = Url.Action("FinanceDashboard", "Home");
-                        }
-                        else if (user.IsInRole("AssetManager"))
-                        {
-                            dashboardUrl = Url.Action("AssetManagerDashboard", "Home");
+                            if (user.IsInRole("Admin"))
+                            {
+                                <a href="@Url.Action("AdminDashboard", "Home")" class="hero-btn hero-btn-light">
+                                    <i class="fa fa-user-shield"></i> Admin Dashboard
+                                </a>
+                                <a href="@Url.Action("Index", "Staff")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-users"></i> Manage Staff
+                                </a>
+                                <a href="@Url.Action("Index", "Assets")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-boxes"></i> View Assets
+                                </a>
+                            }
+                            else if (user.IsInRole("AssetManager"))
+                            {
+                                <a href="@Url.Action("AssetManagerDashboard", "Home")" class="hero-btn hero-btn-light">
+                                    <i class="fa fa-box"></i> Asset Manager Dashboard
+                                </a>
+                                <a href="@Url.Action("Index", "Assets")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-boxes"></i> Manage Assets
+                                </a>
+                                <a href="@Url.Action("Create", "Assets")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-plus-circle"></i> Add New Asset
+                                </a>
+                            }
+                            else if (user.IsInRole("Technician"))
+                            {
+                                <a href="@Url.Action("TechnicianDashboard", "Home")" class="hero-btn hero-btn-light">
+                                    <i class="fa fa-tools"></i> Technician Dashboard
+                                </a>
+                                <a href="@Url.Action("RepairQueue", "Technician")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-clipboard-list"></i> Repair Queue
+                                </a>
+                                <a href="@Url.Action("RepairHistory", "Technician")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-history"></i> My History
+                                </a>
+                            }
+                            else if (user.IsInRole("DepartmentHead"))
+                            {
+                                <a href="@Url.Action("DepartmentHeadDashboard", "Home")" class="hero-btn hero-btn-light">
+                                    <i class="fa fa-sitemap"></i> Department Dashboard
+                                </a>
+                                <a href="@Url.Action("PendingRepairs", "DepartmentHead")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-clock"></i> Pending Repairs
+                                </a>
+                                <a href="@Url.Action("DepartmentStaff", "DepartmentHead")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-users"></i> My Staff
+                                </a>
+                            }
+                            else if (user.IsInRole("FinanceOfficer"))
+                            {
+                                <a href="@Url.Action("FinanceDashboard", "Home")" class="hero-btn hero-btn-light">
+                                    <i class="fa fa-coins"></i> Finance Dashboard
+                                </a>
+                                <a href="@Url.Action("DepreciationReport", "Finance")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-chart-line"></i> Depreciation
+                                </a>
+                                <a href="@Url.Action("Index", "Disposal")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-recycle"></i> Disposal Requests
+                                </a>
+                            }
+                            else if (user.IsInRole("MunicipalEmployee"))
+                            {
+                                <a href="@Url.Action("EmployeeDashboard", "Home")" class="hero-btn hero-btn-light">
+                                    <i class="fa fa-user"></i> Employee Dashboard
+                                </a>
+                                <a href="@Url.Action("MyTasks", "WorkOrders")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-tasks"></i> My Tasks
+                                </a>
+                                <a href="@Url.Action("MyProfile", "Staff")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-user-cog"></i> My Profile
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Index", "Home")" class="hero-btn hero-btn-light">
+                                    <i class="fa fa-home"></i> Home
+                                </a>
+                                <a href="@Url.Action("About", "Home")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-info-circle"></i> About
+                                </a>
+                                <a href="@Url.Action("MyProfile", "Staff")" class="hero-btn hero-btn-outline">
+                                    <i class="fa fa-user"></i> My Profile
+                                </a>
+                            }
                         }
                         else
                         {
-                            dashboardUrl = Url.Action("Index", "Home");
+                            <a href="@Url.Action("Login", "Account")" class="hero-btn hero-btn-success">
+                                <i class="fa fa-sign-in-alt"></i> Staff Login
+                            </a>
+                            <a href="@Url.Action("About", "Home")" class="hero-btn hero-btn-outline">
+                                <i class="fa fa-info-circle"></i> Learn More
+                            </a>
                         }
-
-                        <a href="@dashboardUrl" class="btn btn-light btn-lg mt-3">
-                            <i class="fa fa-arrow-right"></i> Go To Dashboard
-                        </a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Login", "Account")" class="btn btn-success btn-lg mt-3">
-                            <i class="fa fa-sign-in-alt"></i> Staff Login
-                        </a>
-                    }
+                    </div>
 
                 </div>
 
                 <div class="col-md-4 text-center">
 
                     <div class="government-icon">
-                        <i class="fa fa-building fa-5x"></i>
+                        <i class="fa fa-building"></i>
                     </div>
 
                 </div>
@@ -83,15 +591,11 @@
     <section class="container py-5">
 
         <div class="text-center mb-5">
-
-            <h2 class="fw-bold">
-                System Management Modules
-            </h2>
-
-            <p class="text-muted">
+            <h2 class="section-title">System Management Modules</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">
                 Manage municipality activities from one secure administration portal.
             </p>
-
         </div>
 
         <div class="row g-4">
@@ -101,13 +605,15 @@
                     <div class="icon-circle">
                         <i class="fa fa-users"></i>
                     </div>
-                    <h3>
-                        Staff Management
-                    </h3>
+                    <h3>Staff Management</h3>
                     <p>
                         Create, update and manage municipal employees,
                         assign roles and control user access.
                     </p>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span class="card-badge"><i class="fa fa-lock"></i> Admin Access</span>
+                    }
                 </div>
             </div>
 
@@ -116,13 +622,15 @@
                     <div class="icon-circle">
                         <i class="fa fa-building"></i>
                     </div>
-                    <h3>
-                        Asset Management
-                    </h3>
+                    <h3>Asset Management</h3>
                     <p>
                         Track municipal assets, maintenance records,
                         ownership and availability.
                     </p>
+                    @if (User.IsInRole("Admin") || User.IsInRole("AssetManager"))
+                    {
+                        <span class="card-badge"><i class="fa fa-check-circle"></i> Full Access</span>
+                    }
                 </div>
             </div>
 
@@ -131,13 +639,15 @@
                     <div class="icon-circle">
                         <i class="fa fa-money"></i>
                     </div>
-                    <h3>
-                        Finance Management
-                    </h3>
+                    <h3>Finance Management</h3>
                     <p>
                         Manage financial operations,
                         budgets and municipal expenses.
                     </p>
+                    @if (User.IsInRole("FinanceOfficer") || User.IsInRole("Admin"))
+                    {
+                        <span class="card-badge"><i class="fa fa-check-circle"></i> Full Access</span>
+                    }
                 </div>
             </div>
 
@@ -146,13 +656,15 @@
                     <div class="icon-circle">
                         <i class="fa fa-sitemap"></i>
                     </div>
-                    <h3>
-                        Departments
-                    </h3>
+                    <h3>Departments</h3>
                     <p>
                         Organise municipal departments and
                         manage department responsibilities.
                     </p>
+                    @if (User.IsInRole("DepartmentHead") || User.IsInRole("Admin"))
+                    {
+                        <span class="card-badge"><i class="fa fa-check-circle"></i> Full Access</span>
+                    }
                 </div>
             </div>
 
@@ -161,13 +673,15 @@
                     <div class="icon-circle">
                         <i class="fa fa-wrench"></i>
                     </div>
-                    <h3>
-                        Technical Services
-                    </h3>
+                    <h3>Technical Services</h3>
                     <p>
                         Allow technicians to manage maintenance
                         requests and service tasks.
                     </p>
+                    @if (User.IsInRole("Technician") || User.IsInRole("Admin"))
+                    {
+                        <span class="card-badge"><i class="fa fa-check-circle"></i> Full Access</span>
+                    }
                 </div>
             </div>
 
@@ -176,13 +690,15 @@
                     <div class="icon-circle">
                         <i class="fa fa-chart-bar"></i>
                     </div>
-                    <h3>
-                        Reports & Analytics
-                    </h3>
+                    <h3>Reports & Analytics</h3>
                     <p>
                         Generate reports to support better
                         municipal decision making.
                     </p>
+                    @if (User.IsInRole("Admin") || User.IsInRole("FinanceOfficer") || User.IsInRole("DepartmentHead"))
+                    {
+                        <span class="card-badge"><i class="fa fa-check-circle"></i> Full Access</span>
+                    }
                 </div>
             </div>
 
@@ -190,85 +706,196 @@
 
     </section>
 
-    <section class="service-banner">
-        <div class="container text-center text-white py-4">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <section class="container">
+            <div class="role-cards-section">
+                <div class="text-center mb-4">
+                    <h4 style="color: #0a2e5c; font-weight: 700;">
+                        <i class="fa fa-bolt"></i> Quick Access
+                    </h4>
+                    <p class="text-muted">Navigate directly to your key functions</p>
+                </div>
 
-            <h2>
-                Building Better Communities Through Technology
-            </h2>
+                <div class="row g-3">
+                    @{
+                        var user = HttpContext.Current.User;
 
-            <p>
-                Secure • Reliable • Efficient Municipal Administration
-            </p>
+                        if (user.IsInRole("Admin"))
+                        {
+                            <div class="col-md-3 col-6">
+                                <a href="@Url.Action("Index", "Staff")" class="role-card">
+                                    <div class="role-icon role-icon-admin"><i class="fa fa-users"></i></div>
+                                    <div class="role-name">Staff Management</div>
+                                    <div class="role-desc">Manage all staff</div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <a href="@Url.Action("Index", "Assets")" class="role-card">
+                                    <div class="role-icon role-icon-asset"><i class="fa fa-boxes"></i></div>
+                                    <div class="role-name">All Assets</div>
+                                    <div class="role-desc">View all assets</div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <a href="@Url.Action("Index", "Disposal")" class="role-card">
+                                    <div class="role-icon role-icon-finance"><i class="fa fa-recycle"></i></div>
+                                    <div class="role-name">Disposals</div>
+                                    <div class="role-desc">Manage disposals</div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <a href="@Url.Action("DepreciationReport", "Finance")" class="role-card">
+                                    <div class="role-icon role-icon-finance"><i class="fa fa-chart-line"></i></div>
+                                    <div class="role-name">Depreciation</div>
+                                    <div class="role-desc">View depreciation</div>
+                                </a>
+                            </div>
+                        }
 
+                        if (user.IsInRole("AssetManager"))
+                        {
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("Index", "Assets")" class="role-card">
+                                    <div class="role-icon role-icon-asset"><i class="fa fa-boxes"></i></div>
+                                    <div class="role-name">Manage Assets</div>
+                                    <div class="role-desc">All assets</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("Create", "Assets")" class="role-card">
+                                    <div class="role-icon role-icon-asset"><i class="fa fa-plus-circle"></i></div>
+                                    <div class="role-name">Add Asset</div>
+                                    <div class="role-desc">Register new asset</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("Index", "Maintenance")" class="role-card">
+                                    <div class="role-icon role-icon-technician"><i class="fa fa-wrench"></i></div>
+                                    <div class="role-name">Maintenance</div>
+                                    <div class="role-desc">View schedule</div>
+                                </a>
+                            </div>
+                        }
+
+                        if (user.IsInRole("Technician"))
+                        {
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("RepairQueue", "Technician")" class="role-card">
+                                    <div class="role-icon role-icon-technician"><i class="fa fa-tools"></i></div>
+                                    <div class="role-name">Repair Queue</div>
+                                    <div class="role-desc">Your tasks</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("RepairHistory", "Technician")" class="role-card">
+                                    <div class="role-icon role-icon-technician"><i class="fa fa-history"></i></div>
+                                    <div class="role-name">History</div>
+                                    <div class="role-desc">Completed repairs</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("Index", "Maintenance")" class="role-card">
+                                    <div class="role-icon role-icon-technician"><i class="fa fa-calendar-alt"></i></div>
+                                    <div class="role-name">Maintenance</div>
+                                    <div class="role-desc">View schedule</div>
+                                </a>
+                            </div>
+                        }
+
+                        if (user.IsInRole("DepartmentHead"))
+                        {
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("PendingRepairs", "DepartmentHead")" class="role-card">
+                                    <div class="role-icon role-icon-depthead"><i class="fa fa-clock"></i></div>
+                                    <div class="role-name">Pending Repairs</div>
+                                    <div class="role-desc">Review requests</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("DepartmentStaff", "DepartmentHead")" class="role-card">
+                                    <div class="role-icon role-icon-depthead"><i class="fa fa-users"></i></div>
+                                    <div class="role-name">My Staff</div>
+                                    <div class="role-desc">Department team</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("RepairHistory", "DepartmentHead")" class="role-card">
+                                    <div class="role-icon role-icon-depthead"><i class="fa fa-history"></i></div>
+                                    <div class="role-name">History</div>
+                                    <div class="role-desc">Completed repairs</div>
+                                </a>
+                            </div>
+                        }
+
+                        if (user.IsInRole("FinanceOfficer"))
+                        {
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("Index", "Disposal")" class="role-card">
+                                    <div class="role-icon role-icon-finance"><i class="fa fa-recycle"></i></div>
+                                    <div class="role-name">Disposals</div>
+                                    <div class="role-desc">Review requests</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("DepreciationReport", "Finance")" class="role-card">
+                                    <div class="role-icon role-icon-finance"><i class="fa fa-chart-line"></i></div>
+                                    <div class="role-name">Depreciation</div>
+                                    <div class="role-desc">Asset values</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("Reports", "Finance")" class="role-card">
+                                    <div class="role-icon role-icon-finance"><i class="fa fa-file-alt"></i></div>
+                                    <div class="role-name">Reports</div>
+                                    <div class="role-desc">Financial reports</div>
+                                </a>
+                            </div>
+                        }
+
+                        if (user.IsInRole("MunicipalEmployee"))
+                        {
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("MyTasks", "WorkOrders")" class="role-card">
+                                    <div class="role-icon role-icon-employee"><i class="fa fa-tasks"></i></div>
+                                    <div class="role-name">My Tasks</div>
+                                    <div class="role-desc">Your work orders</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("MyProfile", "Staff")" class="role-card">
+                                    <div class="role-icon role-icon-employee"><i class="fa fa-user-cog"></i></div>
+                                    <div class="role-name">My Profile</div>
+                                    <div class="role-desc">Update details</div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <a href="@Url.Action("Index", "Assets")" class="role-card">
+                                    <div class="role-icon role-icon-asset"><i class="fa fa-boxes"></i></div>
+                                    <div class="role-name">View Assets</div>
+                                    <div class="role-desc">Browse assets</div>
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    <section class="container">
+        <div class="service-banner text-white text-center">
+            <div class="container">
+                <h2>
+                    <span class="banner-icon"><i class="fa fa-shield-alt"></i></span>
+                    Building Better Communities Through Technology
+                    <span class="banner-icon"><i class="fa fa-shield-alt"></i></span>
+                </h2>
+                <p>
+                    Secure • Reliable • Efficient Municipal Administration
+                </p>
+            </div>
         </div>
     </section>
 
 </main>
-
-<style>
-    .municipality-hero {
-        background: linear-gradient(135deg, #003366, #006633);
-        min-height: 420px;
-        display: flex;
-        align-items: center;
-    }
-
-    .government-icon {
-        background: white;
-        color: #006633;
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-    }
-
-    .system-card {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        height: 100%;
-        text-align: center;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        transition: 0.3s;
-    }
-
-        .system-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        }
-
-    .icon-circle {
-        width: 70px;
-        height: 70px;
-        margin: auto;
-        margin-bottom: 20px;
-        background: #006633;
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 30px;
-    }
-
-    .system-card h3 {
-        color: #003366;
-        font-weight: bold;
-    }
-
-    .service-banner {
-        background: #003366;
-    }
-
-    @@media (max-width: 768px) {
-        .government-icon {
-            width: 120px;
-            height: 120px;
-            margin-top: 20px;
-        }
-    }
-</style>

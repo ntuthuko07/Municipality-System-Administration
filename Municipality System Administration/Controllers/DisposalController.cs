@@ -13,24 +13,17 @@ namespace Municipality_System_Administration.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        //==============================
-        // INDEX - View all disposal requests
-        //==============================
         [Authorize(Roles = "Admin, AssetManager, FinanceOfficer")]
         [HttpGet]
         public ActionResult Index(string status)
         {
             var requests = db.DisposalRequests.AsQueryable();
 
-            // Filter based on role
             var user = User;
             if (user.IsInRole("FinanceOfficer"))
             {
-                // Finance Officer sees pending requests
                 requests = requests.Where(r => r.Status == "Pending");
             }
-            // Admin and AssetManager see all
-
             if (!string.IsNullOrEmpty(status) && status != "All")
             {
                 requests = requests.Where(r => r.Status == status);
@@ -50,9 +43,6 @@ namespace Municipality_System_Administration.Controllers
             return View(requestList);
         }
 
-        //==============================
-        // REQUEST DISPOSAL - GET (Asset Manager)
-        //==============================
         [Authorize(Roles = "Admin, AssetManager")]
         [HttpGet]
         public new ActionResult Request(int id)
@@ -70,7 +60,6 @@ namespace Municipality_System_Administration.Controllers
                 return RedirectToAction("Index", "Assets");
             }
 
-            // Check if disposal already requested
             var existingRequest = db.DisposalRequests
                 .FirstOrDefault(r => r.AssetId == id && r.Status == "Pending");
 
@@ -80,7 +69,6 @@ namespace Municipality_System_Administration.Controllers
                 return RedirectToAction("Index", "Assets");
             }
 
-            // Disposal methods for asset manager to choose
             var disposalMethods = new SelectList(new List<string>
     {
         "Auction",
@@ -92,15 +80,11 @@ namespace Municipality_System_Administration.Controllers
     });
 
             ViewBag.DisposalMethods = disposalMethods;
-            ViewBag.Asset = asset; // Pass asset to ViewBag as backup
+            ViewBag.Asset = asset; 
 
-            // Return the asset model to the view
             return View(asset);
         }
 
-        //==============================
-        // REQUEST DISPOSAL - POST (Asset Manager)
-        //==============================
         [Authorize(Roles = "Admin, AssetManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -148,7 +132,6 @@ namespace Municipality_System_Administration.Controllers
             db.DisposalRequests.Add(request);
             db.SaveChanges();
 
-            // Add to asset notes
             asset.Notes = (asset.Notes ?? "") + "\n" +
                 DateTime.Now.ToString("dd MMM yyyy HH:mm") +
                 " - Disposal Requested by: " + User.Identity.Name +
@@ -161,9 +144,6 @@ namespace Municipality_System_Administration.Controllers
             return RedirectToAction("Index", "Assets");
         }
 
-        //==============================
-        // FINANCE REVIEW - GET (Finance Officer)
-        //==============================
         [Authorize(Roles = "FinanceOfficer")]
         [HttpGet]
         public ActionResult FinanceReview(int id)
@@ -184,9 +164,6 @@ namespace Municipality_System_Administration.Controllers
             return View(request);
         }
 
-        //==============================
-        // FINANCE REVIEW - POST (Finance Officer)
-        //==============================
         [Authorize(Roles = "FinanceOfficer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -214,9 +191,6 @@ namespace Municipality_System_Administration.Controllers
                 request.Status = "Approved";
                 request.DisposalValue = DisposalValue;
 
-                // ============================================================
-                // ASSET IS AUTOMATICALLY DISPOSED UPON FINANCE APPROVAL
-                // ============================================================
                 var asset = db.Assets.Find(request.AssetId);
                 if (asset != null)
                 {
@@ -247,9 +221,6 @@ namespace Municipality_System_Administration.Controllers
             return RedirectToAction("Index");
         }
 
-        //==============================
-        // DETAILS - View disposal request details
-        //==============================
         [HttpGet]
         public ActionResult Details(int id)
         {
@@ -273,9 +244,6 @@ namespace Municipality_System_Administration.Controllers
         }
     
 
-        //==============================
-        // CANCEL REQUEST - Allow Asset Manager to cancel pending request
-        //==============================
         [Authorize(Roles = "Admin, AssetManager")]
         [HttpGet]
         public ActionResult Cancel(int id)
@@ -296,9 +264,6 @@ namespace Municipality_System_Administration.Controllers
             return View(request);
         }
 
-        //==============================
-        // CANCEL REQUEST - POST
-        //==============================
         [Authorize(Roles = "Admin, AssetManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -311,7 +276,6 @@ namespace Municipality_System_Administration.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Remove the request
             db.DisposalRequests.Remove(request);
             db.SaveChanges();
 

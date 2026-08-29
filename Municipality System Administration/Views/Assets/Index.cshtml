@@ -16,6 +16,7 @@
     ======================================== */
     body {
         background: #f4f7fb;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     /* ========================================
@@ -24,15 +25,20 @@
     .page-header {
         background: linear-gradient(135deg, #0f4c81, #1f7a8c);
         color: white;
-        padding: 25px;
+        padding: 25px 30px;
         border-radius: 12px;
         margin-bottom: 25px;
     }
 
+        .page-header h2 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
     .asset-count {
         background: rgba(255, 255, 255, 0.2);
-        padding: 8px 15px;
-        border-radius: 20px;
+        padding: 8px 18px;
+        border-radius: 25px;
         font-weight: 600;
         color: white;
         display: inline-block;
@@ -46,113 +52,141 @@
     .card-box {
         background: white;
         border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        padding: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, .06);
     }
 
     .stat-card {
         background: white;
-        padding: 15px;
-        border-radius: 10px;
+        padding: 18px 15px;
+        border-radius: 12px;
         text-align: center;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
         border-left: 4px solid #0f4c81;
-        transition: transform 0.3s;
+        transition: all 0.3s ease;
+        height: 100%;
     }
 
         .stat-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
     .stat-number {
-        font-size: 1.8rem;
-        font-weight: bold;
+        font-size: 2rem;
+        font-weight: 700;
         color: #0f4c81;
     }
 
     .stat-label {
         color: #6c757d;
         font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .stat-icon {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+        display: block;
     }
 
     /* ========================================
        TABLE STYLES
     ======================================== */
-    .table thead {
-        background: #0f4c81;
-        color: white;
+    .table {
+        font-size: 0.9rem;
+        margin-bottom: 0;
     }
 
-        .table thead th {
+        .table thead {
+            background: #0f4c81;
             color: white;
-            padding: 12px 15px;
         }
 
-    .table tbody td {
-        padding: 12px 15px;
-        vertical-align: middle;
-    }
+            .table thead th {
+                color: white;
+                padding: 14px 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 0.75rem;
+                letter-spacing: 0.5px;
+                border-bottom: none;
+                white-space: nowrap;
+            }
+
+        .table tbody td {
+            padding: 12px;
+            vertical-align: middle;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8faff;
+        }
 
     .table-responsive {
         overflow-x: auto;
+        border-radius: 8px;
     }
 
     /* ========================================
        BADGES - STATUS
     ======================================== */
     .status-badge {
-        padding: 4px 12px;
+        padding: 5px 14px;
         border-radius: 20px;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: 600;
         display: inline-block;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
     }
 
     .status-available {
-        background: #28a745;
-        color: white;
+        background: #d4edda;
+        color: #155724;
     }
 
     .status-assigned {
-        background: #007bff;
-        color: white;
+        background: #cce5ff;
+        color: #004085;
     }
 
     .status-pendingrepair {
-        background: #fd7e14;
-        color: white;
+        background: #fff3cd;
+        color: #856404;
     }
 
     .status-inrepair {
-        background: #ffc107;
-        color: #212529;
+        background: #ffd8d8;
+        color: #721c24;
     }
 
     .status-repaired {
-        background: #20c997;
-        color: white;
+        background: #d1ecf1;
+        color: #0c5460;
     }
 
     .status-disposed {
-        background: #dc3545;
-        color: white;
+        background: #e2e3e5;
+        color: #383d41;
     }
 
     .status-lost {
-        background: #6c757d;
-        color: white;
+        background: #f5c6cb;
+        color: #721c24;
     }
 
     .status-stolen {
-        background: #343a40;
-        color: white;
+        background: #d6d8db;
+        color: #1b1e21;
     }
 
     /* ========================================
        BADGES - CONDITION
     ======================================== */
     .condition-badge {
-        padding: 4px 10px;
+        padding: 3px 12px;
         border-radius: 12px;
         font-size: 0.7rem;
         font-weight: 600;
@@ -160,40 +194,40 @@
     }
 
     .condition-new {
-        background: #28a745;
-        color: white;
+        background: #d4edda;
+        color: #155724;
     }
 
     .condition-excellent {
-        background: #20c997;
-        color: white;
+        background: #cce5ff;
+        color: #004085;
     }
 
     .condition-good {
-        background: #17a2b8;
-        color: white;
+        background: #d1ecf1;
+        color: #0c5460;
     }
 
     .condition-fair {
-        background: #ffc107;
-        color: #212529;
+        background: #fff3cd;
+        color: #856404;
     }
 
     .condition-poor {
-        background: #fd7e14;
-        color: white;
+        background: #ffd8d8;
+        color: #721c24;
     }
 
     .condition-damaged {
-        background: #dc3545;
-        color: white;
+        background: #f5c6cb;
+        color: #721c24;
     }
 
     /* ========================================
        BADGES - REPAIR
     ======================================== */
     .repair-badge {
-        padding: 4px 10px;
+        padding: 3px 12px;
         border-radius: 12px;
         font-size: 0.7rem;
         font-weight: 600;
@@ -201,49 +235,46 @@
     }
 
     .repair-pending {
-        background: #fd7e14;
-        color: white;
+        background: #fff3cd;
+        color: #856404;
     }
 
     .repair-inprogress {
-        background: #ffc107;
-        color: #212529;
+        background: #cce5ff;
+        color: #004085;
     }
 
     .repair-completed {
-        background: #20c997;
-        color: white;
+        background: #d4edda;
+        color: #155724;
     }
 
     .repair-approved {
-        background: #28a745;
-        color: white;
+        background: #d1ecf1;
+        color: #0c5460;
     }
 
     .repair-needed {
-        background: #dc3545;
-        color: white;
+        background: #f5c6cb;
+        color: #721c24;
         padding: 2px 10px;
         border-radius: 12px;
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         font-weight: 600;
         display: inline-block;
         animation: pulse 2s infinite;
-    }
-
-    .repair-tooltip {
-        cursor: help;
-        border-bottom: 1px dashed #6c757d;
+        margin-left: 5px;
     }
 
     /* ========================================
        FILTER SECTION
     ======================================== */
     .filter-section {
-        background: #f8f9fa;
-        padding: 15px;
+        background: #f8faff;
+        padding: 18px 20px;
         border-radius: 10px;
         margin-bottom: 20px;
+        border: 1px solid #eef2f7;
     }
 
     .filter-select {
@@ -251,139 +282,245 @@
         margin-right: 10px;
     }
 
+        .filter-select .form-control {
+            min-width: 160px;
+        }
+
     .search-box {
-        max-width: 300px;
+        max-width: 280px;
         display: inline-block;
     }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #dce1e8;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #0f4c81;
+            box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.1);
+        }
 
     /* ========================================
        ACTION BUTTONS
     ======================================== */
     .action-buttons {
         display: flex;
-        gap: 5px;
+        gap: 6px;
         flex-wrap: wrap;
     }
 
         .action-buttons .btn {
-            margin: 2px;
-            min-width: 32px;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
             cursor: pointer;
-            pointer-events: auto;
-            z-index: 10;
-            position: relative;
+            border: none;
         }
 
             .action-buttons .btn i {
-                pointer-events: none;
+                font-size: 0.8rem;
             }
 
             .action-buttons .btn:hover {
-                transform: scale(1.05);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             }
 
-    .btn-sm {
-        padding: 4px 10px;
-        font-size: 12px;
-        line-height: 1.5;
-        border-radius: 4px;
-        text-decoration: none !important;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 30px;
-        height: 30px;
-    }
-
-        .btn-sm i {
-            font-size: 13px;
+        .action-buttons .btn-details {
+            background: #e8f4fd;
+            color: #0f4c81;
         }
 
-    .table tbody td:last-child {
-        z-index: 1;
-        position: relative;
-    }
+            .action-buttons .btn-details:hover {
+                background: #d0e4f7;
+            }
+
+        .action-buttons .btn-maintenance {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+            .action-buttons .btn-maintenance:hover {
+                background: #dee2e6;
+            }
+
+        .action-buttons .btn-recycle {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+            .action-buttons .btn-recycle:hover {
+                background: #ffe69c;
+            }
+
+        .action-buttons .btn-update {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+            .action-buttons .btn-update:hover {
+                background: #ffe69c;
+            }
+
+        .action-buttons .btn-edit {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+            .action-buttons .btn-edit:hover {
+                background: #b0d4ff;
+            }
+
+        .action-buttons .btn-repair-request {
+            background: #ffd8d8;
+            color: #721c24;
+        }
+
+            .action-buttons .btn-repair-request:hover {
+                background: #ffb3b3;
+            }
+
+        .action-buttons .btn-approve {
+            background: #d4edda;
+            color: #155724;
+        }
+
+            .action-buttons .btn-approve:hover {
+                background: #b7dfc4;
+            }
+
+        .action-buttons .btn-assign {
+            background: #d4edda;
+            color: #155724;
+        }
+
+            .action-buttons .btn-assign:hover {
+                background: #b7dfc4;
+            }
+
+        .action-buttons .btn-unassign {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+            .action-buttons .btn-unassign:hover {
+                background: #ffe69c;
+            }
+
+        .action-buttons .btn-delete {
+            background: #f5c6cb;
+            color: #721c24;
+        }
+
+            .action-buttons .btn-delete:hover {
+                background: #f1b0b7;
+            }
+
+        .action-buttons .btn-decommission {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+            .action-buttons .btn-decommission:hover {
+                background: #d6d8db;
+            }
+
+        .action-buttons .btn-tech {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+            .action-buttons .btn-tech:hover {
+                background: #b0d4ff;
+            }
+
+        .action-buttons .btn-complete {
+            background: #d4edda;
+            color: #155724;
+        }
+
+            .action-buttons .btn-complete:hover {
+                background: #b7dfc4;
+            }
+
+        .action-buttons .btn-start {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+            .action-buttons .btn-start:hover {
+                background: #b0d4ff;
+            }
+
+        .action-buttons .btn-assign-tech {
+            background: #e8d5f5;
+            color: #6c3483;
+        }
+
+            .action-buttons .btn-assign-tech:hover {
+                background: #d6b8ea;
+            }
+
+        .action-buttons .btn-clocked {
+            background: #e9ecef;
+            color: #6c757d;
+            cursor: default;
+        }
+
+            .action-buttons .btn-clocked:hover {
+                transform: none;
+                box-shadow: none;
+            }
 
     /* ========================================
-       CUSTOM BUTTON COLORS
+       TABLE CELL TEXT
     ======================================== */
-    .btn-assign {
-        background: #28a745;
-        color: white;
+    .asset-name-cell {
+        font-weight: 500;
+        color: #0f4c81;
     }
 
-        .btn-assign:hover {
-            background: #218838;
-            color: white;
-        }
-
-    .btn-unassign {
-        background: #ffc107;
-        color: #212529;
+    .asset-number-cell {
+        font-weight: 600;
+        color: #0f4c81;
+        font-size: 0.85rem;
     }
 
-        .btn-unassign:hover {
-            background: #e0a800;
-            color: #212529;
-        }
-
-    .btn-repair {
-        background: #fd7e14;
-        color: white;
+    .assigned-to-cell .badge-info {
+        background: #e8f4fd;
+        color: #0f4c81;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 500;
     }
 
-        .btn-repair:hover {
-            background: #e06b0a;
-            color: white;
-        }
-
-    .btn-approve {
-        background: #28a745;
-        color: white;
+    .assigned-to-cell .not-assigned {
+        color: #adb5bd;
+        font-size: 0.75rem;
+        font-style: italic;
     }
-
-        .btn-approve:hover {
-            background: #1e7e34;
-            color: white;
-        }
-
-    .btn-recycle {
-        background: #fd7e14;
-        color: white;
-    }
-
-        .btn-recycle:hover {
-            background: #e06b0a;
-            color: white;
-        }
-
-    .btn-disposal {
-        background: #6c757d;
-        color: white;
-    }
-
-        .btn-disposal:hover {
-            background: #5a6268;
-            color: white;
-        }
 
     /* ========================================
        UTILITY
     ======================================== */
     .badge-secondary {
-        background: #6c757d;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.75rem;
-    }
-
-    .badge-info {
-        background: #17a2b8;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.75rem;
+        background: #e9ecef;
+        color: #495057;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 500;
     }
 
     .text-muted {
@@ -433,97 +570,76 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-    }
-
-    .form-control {
-        display: block;
-        width: 100%;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        gap: 10px;
     }
 
     .btn {
-        display: inline-block;
-        font-weight: 400;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: middle;
-        user-select: none;
-        border: 1px solid transparent;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: 0.25rem;
-        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-        text-decoration: none;
+        border-radius: 8px;
+        padding: 8px 18px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
     }
 
     .btn-success {
-        color: #fff;
-        background-color: #28a745;
-        border-color: #28a745;
+        background: #28a745;
+        color: white;
     }
+
+        .btn-success:hover {
+            background: #218838;
+        }
 
     .btn-secondary {
-        color: #fff;
-        background-color: #6c757d;
-        border-color: #6c757d;
+        background: #6c757d;
+        color: white;
     }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
 
     .btn-primary {
-        color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
+        background: #0f4c81;
+        color: white;
     }
 
-    .btn-info {
-        color: #fff;
-        background-color: #17a2b8;
-        border-color: #17a2b8;
+        .btn-primary:hover {
+            background: #0a3a63;
+        }
+
+    .btn-repair {
+        background: #fd7e14;
+        color: white;
     }
 
-    .btn-danger {
-        color: #fff;
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
-
-    .btn-warning {
-        color: #212529;
-        background-color: #ffc107;
-        border-color: #ffc107;
-    }
+        .btn-repair:hover {
+            background: #e06b0a;
+        }
 
     .btn-lg {
-        padding: 0.5rem 1rem;
-        font-size: 1.25rem;
-        line-height: 1.5;
-        border-radius: 0.3rem;
+        padding: 10px 24px;
+        font-size: 1rem;
+        border-radius: 10px;
     }
 
     .alert {
-        padding: 0.75rem 1.25rem;
-        margin-bottom: 1rem;
-        border: 1px solid transparent;
-        border-radius: 0.25rem;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
     }
 
     .alert-success {
+        background: #d4edda;
         color: #155724;
-        background-color: #d4edda;
-        border-color: #c3e6cb;
+        border: 1px solid #c3e6cb;
     }
 
     .alert-danger {
+        background: #f8d7da;
         color: #721c24;
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
+        border: 1px solid #f5c6cb;
     }
 
     .alert-dismissible {
@@ -536,7 +652,6 @@
         font-weight: 700;
         line-height: 1;
         color: #000;
-        text-shadow: 0 1px 0 #fff;
         opacity: .5;
         background: transparent;
         border: 0;
@@ -553,27 +668,13 @@
         opacity: 1;
     }
 
-    .table {
-        width: 100%;
-        margin-bottom: 1rem;
-        background-color: transparent;
-        border-collapse: collapse;
-    }
-
-    .table-bordered {
-        border: 1px solid #dee2e6;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(0, 0, 0, 0.075);
-    }
-
     .container {
         width: 100%;
         padding-right: 15px;
         padding-left: 15px;
         margin-right: auto;
         margin-left: auto;
+        max-width: 100%;
     }
 
     .row {
@@ -635,19 +736,29 @@
     /* ========================================
        RESPONSIVE
     ======================================== */
+    @@media (max-width: 992px) {
+        .action-buttons .btn {
+            font-size: 0.65rem;
+            padding: 4px 8px;
+        }
+
+            .action-buttons .btn i {
+                font-size: 0.7rem;
+            }
+    }
+
     @@media (max-width: 768px) {
         .table-responsive {
             overflow-x: auto;
         }
 
         .action-buttons .btn {
-            min-width: 28px;
-            height: 28px;
-            padding: 3px 8px;
+            font-size: 0.6rem;
+            padding: 3px 6px;
         }
 
             .action-buttons .btn i {
-                font-size: 11px;
+                font-size: 0.65rem;
             }
 
         .search-box {
@@ -660,6 +771,10 @@
             margin-bottom: 10px;
             width: 100%;
         }
+
+            .filter-select .form-control {
+                min-width: 100%;
+            }
 
         .stat-card {
             margin-bottom: 10px;
@@ -680,6 +795,19 @@
 
         .form-inline {
             display: block;
+        }
+
+        .page-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .asset-count {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
         }
     }
 </style>
@@ -732,26 +860,30 @@
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="stat-card" style="border-left-color: #28a745;">
+                <span class="stat-icon"><i class="fa fa-boxes" style="color: #28a745;"></i></span>
                 <div class="stat-number">@ViewBag.TotalAssets</div>
-                <div class="stat-label"><i class="fa fa-boxes"></i> Total Assets</div>
+                <div class="stat-label">Total Assets</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card" style="border-left-color: #17a2b8;">
+                <span class="stat-icon"><i class="fa fa-check-circle" style="color: #17a2b8;"></i></span>
                 <div class="stat-number">@ViewBag.AvailableAssets</div>
-                <div class="stat-label"><i class="fa fa-check-circle"></i> Available</div>
+                <div class="stat-label">Available</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card" style="border-left-color: #007bff;">
+                <span class="stat-icon"><i class="fa fa-user-check" style="color: #007bff;"></i></span>
                 <div class="stat-number">@ViewBag.AssignedAssets</div>
-                <div class="stat-label"><i class="fa fa-user-check"></i> Assigned</div>
+                <div class="stat-label">Assigned</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card" style="border-left-color: #fd7e14;">
+                <span class="stat-icon"><i class="fa fa-tools" style="color: #fd7e14;"></i></span>
                 <div class="stat-number">@ViewBag.InRepair</div>
-                <div class="stat-label"><i class="fa fa-tools"></i> In Repair</div>
+                <div class="stat-label">In Repair</div>
             </div>
         </div>
     </div>
@@ -763,7 +895,7 @@
 
         <!-- FILTER SECTION -->
         <div class="filter-section">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-8">
                     <div class="form-inline">
                         <div class="filter-select">
@@ -861,11 +993,11 @@
 
                                 <tr>
                                     <!-- Asset No -->
-                                    <td><strong>@item.AssetNumber</strong></td>
+                                    <td class="asset-number-cell">@item.AssetNumber</td>
 
                                     <!-- Asset Name -->
-                                    <td>
-                                        <i class="fa fa-box"></i> @item.AssetName
+                                    <td class="asset-name-cell">
+                                        <i class="fa fa-box" style="color: #0f4c81; margin-right: 5px;"></i> @item.AssetName
                                         @if (needsRepair && !item.RepairRequested)
                                         {
                                             <span class="repair-needed">
@@ -889,7 +1021,7 @@
                                     <!-- Status -->
                                     <td>
                                         <span class="status-badge @statusClass">
-                                            <i class="fa fa-circle"></i> @item.Status
+                                            <i class="fa fa-circle" style="font-size: 0.4rem; vertical-align: middle;"></i> @item.Status
                                         </span>
                                     </td>
 
@@ -901,7 +1033,7 @@
                                     </td>
 
                                     <!-- Assigned To -->
-                                    <td>
+                                    <td class="assigned-to-cell">
                                         @if (!string.IsNullOrEmpty(item.AssignedToUserId))
                                         {
                                             var staff = db.Staff.FirstOrDefault(s => s.UserId == item.AssignedToUserId);
@@ -912,7 +1044,7 @@
                                         }
                                         else
                                         {
-                                            <span class="text-muted">Not Assigned</span>
+                                            <span class="not-assigned">Not Assigned</span>
                                         }
                                     </td>
 
@@ -925,9 +1057,7 @@
                                             </span>
                                             if (!string.IsNullOrEmpty(item.RepairReport))
                                             {
-                                                <i class="fa fa-info-circle text-muted repair-tooltip"
-                                                   title="@item.RepairReport"
-                                                   style="cursor:help; margin-left: 5px;"></i>
+                                                <i class="fa fa-info-circle text-muted" title="@item.RepairReport" style="cursor:help; margin-left: 3px;"></i>
                                             }
                                         }
                                         else if (needsRepair)
@@ -938,7 +1068,7 @@
                                         }
                                         else
                                         {
-                                            <span class="text-muted">No Repair</span>
+                                            <span class="text-muted" style="font-size: 0.75rem;">No Repair</span>
                                         }
                                     </td>
 
@@ -948,22 +1078,22 @@
                                     <td>
                                         <div class="action-buttons">
 
-                                            <!-- 1. DETAILS -->
+                                            <!-- 1. View Details -->
                                             <a href="@Url.Action("Details", "Assets", new { id = item.AssetId })"
-                                               class="btn btn-info btn-sm" title="View Details">
-                                                <i class="fa fa-eye"></i>
+                                               class="btn btn-details btn-sm" title="View Details">
+                                                <i class="fa fa-eye"></i> View
                                             </a>
 
-                                            <!-- 2. MAINTENANCE -->
+                                            <!-- 2. Maintenance -->
                                             @if (User.IsInRole("Admin") || User.IsInRole("AssetManager") || User.IsInRole("Technician"))
                                             {
                                                 <a href="@Url.Action("Index", "Maintenance", new { assetId = item.AssetId })"
-                                                   class="btn btn-secondary btn-sm" title="View Maintenance">
-                                                    <i class="fa fa-wrench"></i>
+                                                   class="btn btn-maintenance btn-sm" title="View Maintenance">
+                                                    <i class="fa fa-wrench"></i> Maintenance
                                                 </a>
                                             }
 
-                                            <!-- Request Disposal Button -->
+                                            <!-- 3. Request Disposal -->
                                             @if (User.Identity.IsAuthenticated && item.Status != "Disposed" && item.IsActive)
                                             {
                                                 var existingRequest = db.DisposalRequests
@@ -972,17 +1102,15 @@
                                                 if (existingRequest == null)
                                                 {
                                                     <a href="@Url.Action("Request", "Disposal", new { id = item.AssetId })"
-                                                       class="btn btn-recycle btn-sm"
-                                                       title="Request Disposal">
-                                                        <i class="fa fa-recycle"></i>
+                                                       class="btn btn-recycle btn-sm" title="Request Disposal">
+                                                        <i class="fa fa-recycle"></i> Dispose
                                                     </a>
                                                 }
                                                 else
                                                 {
                                                     <a href="@Url.Action("Details", "Disposal", new { id = existingRequest.DisposalRequestId })"
-                                                       class="btn btn-secondary btn-sm"
-                                                       title="View Disposal Request">
-                                                        <i class="fa fa-clock"></i>
+                                                       class="btn btn-clocked btn-sm" title="View Disposal Request">
+                                                        <i class="fa fa-clock"></i> Pending
                                                     </a>
                                                 }
                                             }
@@ -990,73 +1118,73 @@
                                             <!-- 4. ADMIN / ASSET MANAGER ACTIONS -->
                                             @if (User.IsInRole("Admin") || User.IsInRole("AssetManager"))
                                             {
-                                                <!-- 4a. Update Status -->
+                                                <!-- Update Status -->
                                                 <a href="@Url.Action("UpdateStatus", "Assets", new { id = item.AssetId })"
-                                                   class="btn btn-warning btn-sm" title="Update Status">
-                                                    <i class="fa fa-exchange-alt"></i>
+                                                   class="btn btn-update btn-sm" title="Update Status">
+                                                    <i class="fa fa-exchange-alt"></i> Status
                                                 </a>
 
-                                                <!-- 4b. Edit -->
+                                                <!-- Edit -->
                                                 <a href="@Url.Action("Edit", "Assets", new { id = item.AssetId })"
-                                                   class="btn btn-primary btn-sm" title="Edit Asset">
-                                                    <i class="fa fa-edit"></i>
+                                                   class="btn btn-edit btn-sm" title="Edit Asset">
+                                                    <i class="fa fa-edit"></i> Edit
                                                 </a>
 
-                                                <!-- 4c. Request Repair -->
+                                                <!-- Request Repair -->
                                                 if (needsRepair && !item.RepairRequested && item.Status != "Pending Repair" && item.Status != "In Repair")
                                                 {
                                                     <a href="@Url.Action("RequestRepair", "Assets", new { id = item.AssetId })"
-                                                       class="btn btn-repair btn-sm" title="Request Repair">
-                                                        <i class="fa fa-tools"></i>
+                                                       class="btn btn-repair-request btn-sm" title="Request Repair">
+                                                        <i class="fa fa-tools"></i> Repair
                                                     </a>
                                                 }
 
-                                                <!-- 4d. Approve Repair -->
+                                                <!-- Approve Repair -->
                                                 if (item.RepairStatus == "Completed")
                                                 {
                                                     <a href="@Url.Action("ApproveRepair", "Assets", new { id = item.AssetId })"
                                                        class="btn btn-approve btn-sm" title="Approve Repair">
-                                                        <i class="fa fa-check-circle"></i>
+                                                        <i class="fa fa-check-circle"></i> Approve
                                                     </a>
                                                 }
 
-                                                <!-- 4e. Assign / Unassign -->
+                                                <!-- Assign / Unassign -->
                                                 if (item.Status == "Assigned")
                                                 {
                                                     <a href="@Url.Action("Unassign", "Assets", new { id = item.AssetId })"
                                                        class="btn btn-unassign btn-sm" title="Unassign Asset"
                                                        onclick="return confirm('Are you sure you want to unassign this asset?');">
-                                                        <i class="fa fa-user-slash"></i>
+                                                        <i class="fa fa-user-slash"></i> Unassign
                                                     </a>
                                                 }
                                                 else if (item.Status == "Available" && (item.RepairStatus != "Pending" && item.RepairStatus != "In Progress" && !needsRepair))
                                                 {
                                                     <a href="@Url.Action("Assign", "Assets", new { id = item.AssetId })"
                                                        class="btn btn-assign btn-sm" title="Assign Asset">
-                                                        <i class="fa fa-user-plus"></i>
+                                                        <i class="fa fa-user-plus"></i> Assign
                                                     </a>
                                                 }
 
-                                                <!-- 4f. Delete -->
-                                                <a href="@Url.Action("Delete", "Assets", new { id = item.AssetId })"
-                                                   class="btn btn-danger btn-sm" title="Delete Asset"
-                                                   onclick="return confirm('Are you sure you want to delete this asset? This action cannot be undone.');">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-
-                                                <!-- 4g. Decommission -->
+                                                <!-- Decommission (Replaces the extra bin) -->
                                                 <a href="@Url.Action("Decommission", "Assets", new { id = item.AssetId })"
-                                                   class="btn btn-danger btn-sm" title="Decommission Asset"
-                                                   onclick="return confirm('Are you sure you want to decommission this asset?');">
-                                                    <i class="fa fa-trash-alt"></i>
+                                                   class="btn btn-decommission btn-sm" title="Decommission Asset"
+                                                   onclick="return confirm('Are you sure you want to decommission this asset? This will mark it as retired.');">
+                                                    <i class="fa fa-flag-checkered"></i> Decommission
                                                 </a>
 
-                                                <!-- 4h. Assign Technician -->
+                                                <!-- Delete (Permanent) -->
+                                                <a href="@Url.Action("Delete", "Assets", new { id = item.AssetId })"
+                                                   class="btn btn-delete btn-sm" title="Delete Permanently"
+                                                   onclick="return confirm('Are you sure you want to permanently delete this asset? This cannot be undone.');">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+
+                                                <!-- Assign Technician -->
                                                 if (item.RepairRequested && string.IsNullOrEmpty(item.RepairAssignedToUserId))
                                                 {
                                                     <a href="@Url.Action("AssignTechnician", "Assets", new { id = item.AssetId })"
-                                                       class="btn btn-warning btn-sm" title="Assign Technician">
-                                                        <i class="fa fa-user-cog"></i>
+                                                       class="btn btn-assign-tech btn-sm" title="Assign Technician">
+                                                        <i class="fa fa-user-cog"></i> Assign Tech
                                                     </a>
                                                 }
                                             }
@@ -1067,16 +1195,16 @@
                                                 if (item.RepairStatus == "Pending" && item.RepairAssignedToUserId == currentUserId)
                                                 {
                                                     <a href="@Url.Action("StartRepair", "Technician", new { id = item.AssetId })"
-                                                       class="btn btn-primary btn-sm" title="Start Repair">
-                                                        <i class="fa fa-play"></i>
+                                                       class="btn btn-start btn-sm" title="Start Repair">
+                                                        <i class="fa fa-play"></i> Start
                                                     </a>
                                                 }
 
                                                 if (item.RepairStatus == "In Progress" && item.RepairAssignedToUserId == currentUserId)
                                                 {
                                                     <a href="@Url.Action("CompleteRepair", "Technician", new { id = item.AssetId })"
-                                                       class="btn btn-success btn-sm" title="Complete Repair">
-                                                        <i class="fa fa-check"></i>
+                                                       class="btn btn-complete btn-sm" title="Complete Repair">
+                                                        <i class="fa fa-check"></i> Complete
                                                     </a>
                                                 }
                                             }
@@ -1144,8 +1272,17 @@
             setInterval(updateRepairCount, 30000);
 
             // Confirm delete
-            $('.btn-danger').on('click', function(e) {
-                if (!confirm('Are you sure you want to delete this asset? This action cannot be undone.')) {
+            $('.btn-delete').on('click', function(e) {
+                if (!confirm('Are you sure you want to permanently delete this asset? This action cannot be undone.')) {
+                    e.preventDefault();
+                    return false;
+                }
+                return true;
+            });
+
+            // Confirm decommission
+            $('.btn-decommission').on('click', function(e) {
+                if (!confirm('Are you sure you want to decommission this asset? This will mark it as retired.')) {
                     e.preventDefault();
                     return false;
                 }
